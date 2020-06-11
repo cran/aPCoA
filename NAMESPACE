@@ -1,5 +1,4 @@
 import(vegan)
-import(mvabund)
 import(ape)
 importFrom("car","dataEllipse")
 importFrom("cluster","pam")

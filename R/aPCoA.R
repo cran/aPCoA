@@ -41,11 +41,10 @@ aPCoA<-function (formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE)
   X<-as.matrix(X[,-1],nrow=nrow(X))
 
   H<-X%*%solve(t(X)%*%X)%*%t(X)
-  
-  A<--1/2*((diag(nrow(H))-H)%*%as.matrix(y)^2%*%(diag(nrow(H))-H))
-  J<-diag(nrow(X))-matrix(rep(1/(nrow(X)),length(A)),nrow=nrow(A))
-  E<-J%*%A%*%J
 
+  A<--1/2*as.matrix(y)^2
+  J<-diag(nrow(X))-matrix(rep(1/(nrow(X)),length(A)),nrow=nrow(A))
+  E<-(diag(nrow(H))-H)%*%J%*%A%*%J%*%(diag(nrow(H))-H)
   rownames(E)<-rownames(data)
   colnames(E)<-rownames(data)
   eigenE<-eigen(E)$vectors

@@ -24,9 +24,9 @@ aPCoA(formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE)
  \item{plotMatrix}{The matrix for plotting the adjusted PCoA plot.}
 }
 
-\source{Yushu Shi, Liangliang Zhang, Kim-Anh Do, Christine Peterson and Robert Jenq. (2020) aPCoA: Covariate Adjusted Principal Coordinates Analysis <arXiv:2003.09544>}
+\references{Yushu Shi, Liangliang Zhang, Kim-Anh Do, Christine Peterson and Robert Jenq. (2020) aPCoA: Covariate Adjusted Principal Coordinates Analysis <arXiv:2003.09544>
+}
 \examples{
-library(mvabund)
 library(vegan)
 library(aPCoA)
 data("Tasmania")
