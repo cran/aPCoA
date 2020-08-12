@@ -97,7 +97,7 @@ if(drawEllipse){
        ylab=paste("2nd Coordinate",round(origpcoa$values$Relative_eig[2]*100,2),"%"))
 
     dataEllipse(origpcoa$vectors[,1],origpcoa$vectors[,2],
-                data[,as.character(substitute(maincov))],lwd=3,
+                factor(data[,as.character(substitute(maincov))]),lwd=3,
                 levels = 0.95,add=TRUE,plot.points = FALSE,
                 group.labels = NULL,
                 ellipse.label=NULL,center.pch = NULL,
