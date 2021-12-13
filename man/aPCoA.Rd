@@ -8,7 +8,8 @@
   Adjusted confounding covariates to show the effect of the primary covariate in a PCoA plot. This method is designed for non-Euclidean distance. This function will plot the original PCoA plot along with the covariate adjusted PCoA plot.
   }
 \usage{
-aPCoA(formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE)
+aPCoA(formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE,
+pch=19,cex=2,lwd=3,col=NULL,...)
 }
 
 \arguments{
@@ -17,6 +18,11 @@ aPCoA(formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE)
   \item{maincov}{the covariate of interest in the dataset, must be a factor}
   \item{drawEllipse}{Do you want to draw the 95\% confidence elipse for each cluster?}
   \item{drawCenter}{Do you want to show the connection between cluster center (medoid) and cluster members?}
+  \item{pch}{Point shapes}
+  \item{cex}{Number indicating the amount by which plotting text and symbols should be scaled relative to the default.}
+  \item{lwd}{Line width of the ellipses}
+  \item{col}{Color for plot. If not provided by user, will use default distinct colors}
+  \item{...}{Arguments passed to 'dataEllipse'.}
 }
 
 \value{

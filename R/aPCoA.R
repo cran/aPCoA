@@ -13,7 +13,7 @@ ellipseYS <- function(center, shape, radius) {
   ellipse
 }
 
-aPCoA<-function (formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE) 
+aPCoA<-function (formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE,pch=19,cex=2,lwd=3,col=NULL,...) 
 { 
   Terms <- terms(formula, data = data)
   lhs <- formula[[2]]
@@ -50,7 +50,11 @@ aPCoA<-function (formula,data,maincov,drawEllipse=TRUE,drawCenter=TRUE)
   eigenE<-eigen(E)$vectors
   eigenvalue<-eigen(E)$values
   tempvector<-as.character(data[,as.character(substitute(maincov))])
-  color1<-distinctColorPalette(length(unique(tempvector)))
+  if(is.null(col)){
+    color1<-distinctColorPalette(length(unique(tempvector)))
+  }else{
+    color1<-col
+  }
   names(color1)<-unique(tempvector)
   rownames(eigenE)<-rownames(data)
   centernames<-unique(tempvector)
@@ -92,20 +96,20 @@ if(drawEllipse){
   plot(origpcoa$vectors[,1],origpcoa$vectors[,2],
        xlim=c(xMinPlot,xMaxPlot),ylim = c(yMinPlot,yMaxPlot),
        main="Original PCoA colored \n by the main covariate",
-       pch=19,col=color1[tempvector],cex=2,
+       pch=pch,col=color1[tempvector],cex=cex,
        xlab=paste("1st Coordinate",round(origpcoa$values$Relative_eig[1]*100,2),"%"),
        ylab=paste("2nd Coordinate",round(origpcoa$values$Relative_eig[2]*100,2),"%"))
 
     dataEllipse(origpcoa$vectors[,1],origpcoa$vectors[,2],
-                factor(data[,as.character(substitute(maincov))]),lwd=3,
+                factor(data[,as.character(substitute(maincov))]),lwd=lwd,
                 levels = 0.95,add=TRUE,plot.points = FALSE,
                 group.labels = NULL,
                 ellipse.label=NULL,center.pch = NULL,
-                col=color1)
+                col=color1,...)
 }else{
   plot(origpcoa$vectors[,1],origpcoa$vectors[,2],
        main="Original PCoA colored \n by the main covariate",
-       pch=19,col=color1[tempvector],cex=2,
+       pch=pch,col=color1[tempvector],cex=cex,
        xlab=paste("1st Coordinate",round(origpcoa$values$Relative_eig[1]*100,2),"%"),
        ylab=paste("2nd Coordinate",round(origpcoa$values$Relative_eig[2]*100,2),"%"))
 }
@@ -113,12 +117,12 @@ if(drawEllipse){
     for(i in 1:length(centernames)){
       for(j in rownames(data)[tempvector==centernames[i]]){
         segments(origpcoa$vectors[centers[i],1],origpcoa$vectors[centers[i],2],
-                 origpcoa$vectors[j,1],origpcoa$vectors[j,2],col=color1[i],lwd=3)
+                 origpcoa$vectors[j,1],origpcoa$vectors[j,2],col=color1[i],lwd=lwd)
       } 
     }
   }
   legend(par('usr')[2], par('usr')[4], bty='n', xpd=NA,
-         unique(tempvector),pch=19,col=color1)
+         unique(tempvector),pch=pch,col=color1)
   
 
   if(drawEllipse){
@@ -143,18 +147,18 @@ if(drawEllipse){
     plot(eigenE[,1]*eigenvalue[1]^(1/2),eigenE[,2]*eigenvalue[2]^(1/2),
          xlim=c(xMinPlot,xMaxPlot),ylim = c(yMinPlot,yMaxPlot),
          main="Covariate Adjusted PCoA colored \n by the main covariate",
-         pch=19,col=color1[tempvector],cex=2,
+         pch=pch,col=color1[tempvector],cex=cex,
          xlab=paste("1st Coordinate",round(eigenvalue[1]/sum(eigenvalue)*100,2),"%"),
          ylab=paste("2nd Coordinate",round(eigenvalue[2]/sum(eigenvalue)*100,2),"%"))
     dataEllipse(eigenE[,1]*eigenvalue[1]^(1/2),eigenE[,2]*eigenvalue[2]^(1/2),
-                factor(tempvector),lwd=3,
+                factor(tempvector),lwd=lwd,
                 levels = 0.95,add=TRUE,plot.points = FALSE,group.labels = NULL,
                 ellipse.label=NULL,center.pch = NULL,
-                col=color1)
+                col=color1, ...)
   }else{
     plot(eigenE[,1]*eigenvalue[1]^(1/2),eigenE[,2]*eigenvalue[2]^(1/2),
          main="Covariate Adjusted PCoA colored \n by the main covariate",
-         pch=19,col=color1[tempvector],cex=2,
+         pch=pch,col=color1[tempvector],cex=cex,
          xlab=paste("1st Coordinate",round(eigenvalue[1]/sum(eigenvalue)*100,2),"%"),
          ylab=paste("2nd Coordinate",round(eigenvalue[2]/sum(eigenvalue)*100,2),"%"))
     }
@@ -163,7 +167,7 @@ if(drawEllipse){
       for(j in rownames(data)[tempvector==centernames[i]]){
         segments(eigenE[newcenters[i],1]*eigenvalue[1]^(1/2),eigenE[newcenters[i],2]*eigenvalue[2]^(1/2),
                  eigenE[j,1]*eigenvalue[1]^(1/2),eigenE[j,2]*eigenvalue[2]^(1/2),
-                 col=color1[i],lwd=3)
+                 col=color1[i],lwd=lwd)
       } 
     }
   }
